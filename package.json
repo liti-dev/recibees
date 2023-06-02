@@ -1,0 +1,15 @@
+{
+  "name": "recibees",
+  "version": "1.0.0",
+  "description": " store your recipe collection while finding ideas all in one place.",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Tia",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.9.1",
+    "parcel": "^2.9.1"
+  }
+}
