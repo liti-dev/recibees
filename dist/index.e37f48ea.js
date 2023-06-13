@@ -585,9 +585,25 @@ const timeout = function(s) {
         }, s * 1000);
     });
 };
+const showSpinner = (el)=>{
+    const spinnerMarkup = `<div class="spinner">
+  <svg>
+    <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
+  </svg>
+</div>`;
+    el.innerHTML = "";
+    el.insertAdjacentHTML("afterbegin", spinnerMarkup);
+};
+// const spinnerMarkup = `<div class="spinner">
+// <svg>
+//    <use href="${icons}#icon-loader"></use>
+//  </svg>
+//  </div>`;
 const showRecipes = async function() {
     // Fetch recipes
     try {
+        //Load spinner
+        showSpinner(recipeContainer);
         const res = await fetch("https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcd09");
         const data = await res.json();
         let { recipe  } = data.data;
@@ -700,39 +716,13 @@ const showRecipes = async function() {
         alert(err);
     }
 };
-showRecipes(); //API by Jonas https://forkify-api.herokuapp.com/v2
+showRecipes();
+window.addEventListener("hashchange", changeUrl);
+const changeUrl = ()=>{
+    console.log("Haha");
+}; //API by Jonas https://forkify-api.herokuapp.com/v2
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../img/icons.svg":"cMpiy"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"cMpiy":[function(require,module,exports) {
+},{"../img/icons.svg":"cMpiy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cMpiy":[function(require,module,exports) {
 module.exports = require("17cff2908589362b").getBundleURL("hWUTQ") + "icons.21bad73c.svg" + "?" + Date.now();
 
 },{"17cff2908589362b":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -769,6 +759,36 @@ function getOrigin(url) {
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
+
+},{}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
 },{}]},["aD7Zm","aenu9"], "aenu9", "parcelRequire4390")
 

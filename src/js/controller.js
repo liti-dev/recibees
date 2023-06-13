@@ -10,9 +10,26 @@ const timeout = function (s) {
   });
 };
 
+const showSpinner = el => {
+  const spinnerMarkup = `<div class="spinner">
+  <svg>
+    <use href="${icons}#icon-loader"></use>
+  </svg>
+</div>`;
+  el.innerHTML = '';
+  el.insertAdjacentHTML('afterbegin', spinnerMarkup);
+};
+// const spinnerMarkup = `<div class="spinner">
+// <svg>
+//    <use href="${icons}#icon-loader"></use>
+//  </svg>
+//  </div>`;
 const showRecipes = async function () {
   // Fetch recipes
   try {
+    //Load spinner
+
+    showSpinner(recipeContainer);
     const res = await fetch(
       'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcd09'
     );
@@ -30,6 +47,7 @@ const showRecipes = async function () {
       ingredients: recipe.ingredients,
     };
     // console.log(recipe.ingredients, recipe, icons);
+
     // Render recipes
     const markup = `
     <figure class="recipe__fig">
@@ -133,8 +151,10 @@ const showRecipes = async function () {
       </a>
     </div>
     `;
+
     recipeContainer.innerHTML = '';
     recipeContainer.insertAdjacentHTML('afterbegin', markup);
+
     if (!res.ok) {
       throw new Error(`${data.message} (${res.status})`);
     }
@@ -143,5 +163,9 @@ const showRecipes = async function () {
   }
 };
 showRecipes();
+window.addEventListener('hashchange', changeUrl);
+const changeUrl = () => {
+  console.log('Haha');
+};
 
 //API by Jonas https://forkify-api.herokuapp.com/v2
