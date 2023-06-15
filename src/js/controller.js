@@ -21,7 +21,6 @@ const showSpinner = el => {
 };
 
 const showRecipes = async function (newURL) {
-  // Fetch recipes
   try {
     const newURL = window.location.hash.substring(1);
 
