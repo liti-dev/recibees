@@ -1,3 +1,4 @@
+import * as model from './model.js';
 import icons from '../img/icons.svg';
 
 const recipeContainer = document.querySelector('.recipe');
@@ -30,22 +31,9 @@ const showRecipes = async function (newURL) {
     //Load spinner
     showSpinner(recipeContainer);
 
-    // Fetch recipes
-    const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${newURL}`
-    );
-    const data = await res.json();
-    let { recipe } = data.data;
-    recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      cookingTime: recipe.cooking_time,
-      sourceUrl: recipe.source_url,
-      image: recipe.image_url,
-      servings: recipe.servings,
-      ingredients: recipe.ingredients,
-    };
+    // Load recipes
+    await model.loadRecipe(newURL);
+    const { recipe } = model.state;
 
     // Render recipes
     const markup = `
@@ -150,9 +138,10 @@ const showRecipes = async function (newURL) {
     recipeContainer.innerHTML = '';
     recipeContainer.insertAdjacentHTML('afterbegin', markup);
 
-    if (!res.ok) {
-      throw new Error(`${data.message} (${res.status})`);
-    }
+    // res is undefined. Reference error
+    // if (!res.ok) {
+    //   throw new Error(`${data.message} (${res.status})`);
+    // }
   } catch (err) {
     alert(err);
   }

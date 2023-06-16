@@ -575,6 +575,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _modelJs = require("./model.js");
 var _iconsSvg = require("../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 const recipeContainer = document.querySelector(".recipe");
@@ -595,27 +596,15 @@ const showSpinner = (el)=>{
     el.insertAdjacentHTML("afterbegin", spinnerMarkup);
 };
 const showRecipes = async function(newURL) {
-    // Fetch recipes
     try {
         const newURL = window.location.hash.substring(1);
         // prevent error loading if there's no hash
         if (!newURL) return;
         //Load spinner
         showSpinner(recipeContainer);
-        // Fetch recipes
-        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${newURL}`);
-        const data = await res.json();
-        let { recipe  } = data.data;
-        recipe = {
-            id: recipe.id,
-            title: recipe.title,
-            publisher: recipe.publisher,
-            cookingTime: recipe.cooking_time,
-            sourceUrl: recipe.source_url,
-            image: recipe.image_url,
-            servings: recipe.servings,
-            ingredients: recipe.ingredients
-        };
+        // Load recipes
+        await _modelJs.loadRecipe(newURL);
+        const { recipe  } = _modelJs.state;
         // Render recipes
         const markup = `
     <figure class="recipe__fig">
@@ -705,7 +694,10 @@ const showRecipes = async function(newURL) {
     `;
         recipeContainer.innerHTML = "";
         recipeContainer.insertAdjacentHTML("afterbegin", markup);
-        if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+    // res is undefined. Reference error
+    // if (!res.ok) {
+    //   throw new Error(`${data.message} (${res.status})`);
+    // }
     } catch (err) {
         alert(err);
     }
@@ -716,7 +708,68 @@ const showRecipes = async function(newURL) {
 ].forEach((event)=>window.addEventListener(event, showRecipes)); // window.addEventListener('hashchange', showRecipes);
  //API by Jonas https://forkify-api.herokuapp.com/v2
 
-},{"../img/icons.svg":"cMpiy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cMpiy":[function(require,module,exports) {
+},{"./model.js":"Y4A21","../img/icons.svg":"cMpiy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
+//business logic + state + http lib
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
+const state = {
+    recipe: {}
+};
+const loadRecipe = async function(newURL) {
+    try {
+        // Fetch recipes
+        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${newURL}`);
+        const data = await res.json();
+        let { recipe  } = data.data;
+        state.recipe = {
+            id: recipe.id,
+            title: recipe.title,
+            publisher: recipe.publisher,
+            cookingTime: recipe.cooking_time,
+            sourceUrl: recipe.source_url,
+            image: recipe.image_url,
+            servings: recipe.servings,
+            ingredients: recipe.ingredients
+        };
+    // console.log(state.recipe);
+    } catch (err) {
+        alert(err);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"cMpiy":[function(require,module,exports) {
 module.exports = require("17cff2908589362b").getBundleURL("hWUTQ") + "icons.21bad73c.svg" + "?" + Date.now();
 
 },{"17cff2908589362b":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -753,36 +806,6 @@ function getOrigin(url) {
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
-
-},{}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
 
 },{}]},["aD7Zm","aenu9"], "aenu9", "parcelRequire4390")
 
