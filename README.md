@@ -1,13 +1,13 @@
-## RECIBEES 🐝
-I've always been passionate about foods. I love cooking, too. Like a bee collecting pollens, I'm always on the lookout for interesting new recipes. 
-#### 👉 This is a one-stop app for meal inspiration and personal recipe storage.
-#### 🎯 Goals: review JS fundamentals and build an app I can use.
-#### 🍔 Stack: HTML5/CSS3, SASS, JS.
+# RECIBEES 🐝
+## A one-stopper for meal inspiration and personal recipe storage.
+I've always been passionate about foods. I love cooking, too. Like a bee collecting pollens, I'm always on the lookout for new recipes. 
+### 🎯 Goals: review JS fundamentals/OOP and build an app I can use
+### 🍔 Stack: HTML5/CSS3, SASS, JS.
 
-
-
-
-
-
-
-Inspired from Forkify by Jonas Schmedtmann 
+### Desired functions:
+- [ ] Search for recipes by keyword
+- [ ] Bookmark recipes
+- [ ] Add personal recipes
+- [ ] Calculate servings
+      
+_Inspired by Forkify by Jonas Schmedtmann_ 
