@@ -1,11 +1,10 @@
 //business logic + state + http lib
+import { API_URL } from './config';
 export const state = { recipe: {} };
 export const loadRecipe = async function (newURL) {
   try {
     // Fetch recipes
-    const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${newURL}`
-    );
+    const res = await fetch(`${API_URL}/${newURL}`);
     const data = await res.json();
     let { recipe } = data.data;
     state.recipe = {
