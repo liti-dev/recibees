@@ -38,10 +38,9 @@ const showRecipes = async function (newURL) {
   }
 };
 
-['hashchange', 'load'].forEach(event =>
-  window.addEventListener(event, showRecipes)
-);
-
 // window.addEventListener('hashchange', showRecipes);
-
+const init = () => {
+  RecipeView.addHandlerRender(showRecipes);
+};
 //API by Jonas https://forkify-api.herokuapp.com/v2
+init();

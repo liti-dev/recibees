@@ -607,11 +607,12 @@ const showRecipes = async function(newURL) {
         alert(err);
     }
 };
-[
-    "hashchange",
-    "load"
-].forEach((event)=>window.addEventListener(event, showRecipes)); // window.addEventListener('hashchange', showRecipes);
- //API by Jonas https://forkify-api.herokuapp.com/v2
+// window.addEventListener('hashchange', showRecipes);
+const init = ()=>{
+    (0, _recipeViewJsDefault.default).addHandlerRender(showRecipes);
+};
+//API by Jonas https://forkify-api.herokuapp.com/v2
+init();
 
 },{"./model.js":"Y4A21","./views/RecipeView.js":"aFEMw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
 //business logic + state + http lib
@@ -645,7 +646,13 @@ const loadRecipe = async function(newURL) {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs"}],"gkKU3":[function(require,module,exports) {
+},{"./config":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k5Hzs":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -675,13 +682,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"k5Hzs":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "API_URL", ()=>API_URL);
-const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aFEMw":[function(require,module,exports) {
+},{}],"aFEMw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("../../img/icons.svg");
@@ -708,6 +709,12 @@ class RecipeView {
   </div>`;
         this.#clear();
         this.#parentElement.insertAdjacentHTML("afterbegin", spinnerMarkup);
+    };
+    addHandlerRender = (handler)=>{
+        [
+            "hashchange",
+            "load"
+        ].forEach((event)=>window.addEventListener(event, handler));
     };
     #generateMarkup() {
         return `
