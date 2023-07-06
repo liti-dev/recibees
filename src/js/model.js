@@ -1,5 +1,6 @@
 //business logic + state + http lib
 import { API_URL } from './config';
+import RecipeView from './views/RecipeView';
 export const state = { recipe: {} };
 export const loadRecipe = async function (newURL) {
   try {
@@ -19,6 +20,13 @@ export const loadRecipe = async function (newURL) {
     };
     // console.log(state.recipe);
   } catch (err) {
-    alert(err);
+    throw err;
+  }
+};
+
+export const loadSearchResults = async function (query) {
+  try {
+  } catch (err) {
+    throw err;
   }
 };

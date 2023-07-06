@@ -34,7 +34,7 @@ const showRecipes = async function (newURL) {
     //   throw new Error(`${data.message} (${res.status})`);
     // }
   } catch (err) {
-    alert(err);
+    RecipeView.renderError();
   }
 };
 

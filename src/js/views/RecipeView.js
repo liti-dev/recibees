@@ -4,6 +4,7 @@ class RecipeView {
   // private properties
   #parentElement = document.querySelector('.recipe');
   #data;
+  #defaultErrorMessage = `Sorry we couldn't find the recipe. Please try another one!`;
   render(data) {
     this.#data = data;
     // console.log(this.#data);
@@ -16,7 +17,7 @@ class RecipeView {
     this.#parentElement.innerHTML = '';
   }
 
-  renderSpinner = () => {
+  renderSpinner() {
     const spinnerMarkup = `<div class="spinner">
     <svg>
       <use href="${icons}#icon-loader"></use>
@@ -24,13 +25,26 @@ class RecipeView {
   </div>`;
     this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', spinnerMarkup);
-  };
+  }
 
-  addHandlerRender = handler => {
+  renderError(message = this.#defaultErrorMessage) {
+    const errorMarkup = `<div class="error">
+    <div>
+      <svg>
+        <use href="${icons}#icon-alert-triangle"></use>
+      </svg>
+    </div>
+    <p>${message}</p>
+  </div>`;
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', errorMarkup);
+  }
+
+  addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(event =>
       window.addEventListener(event, handler)
     );
-  };
+  }
 
   #generateMarkup() {
     return `
