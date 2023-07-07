@@ -1,11 +1,16 @@
 //business logic + state + http lib
 import { API_URL } from './config';
-import RecipeView from './views/RecipeView';
-export const state = { recipe: {} };
+
+export const state = {
+  recipe: {},
+  search: {
+    query: '',
+    results: [],
+  },
+};
 export const loadRecipe = async function (newURL) {
   try {
-    // Fetch recipes
-    const res = await fetch(`${API_URL}/${newURL}`);
+    const res = await fetch(`${API_URL}${newURL}`);
     const data = await res.json();
     let { recipe } = data.data;
     state.recipe = {
@@ -18,7 +23,6 @@ export const loadRecipe = async function (newURL) {
       servings: recipe.servings,
       ingredients: recipe.ingredients,
     };
-    // console.log(state.recipe);
   } catch (err) {
     throw err;
   }
@@ -26,6 +30,20 @@ export const loadRecipe = async function (newURL) {
 
 export const loadSearchResults = async function (query) {
   try {
+    state.search.query = query;
+    const res = await fetch(`${API_URL}?search=${query}`);
+    const data = await res.json();
+
+    state.search.results = data.data.recipes.map(recipe => {
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        cookingTime: recipe.cooking_time,
+        image: recipe.image_url,
+      };
+    });
+    console.log('results', state.search.results);
   } catch (err) {
     throw err;
   }

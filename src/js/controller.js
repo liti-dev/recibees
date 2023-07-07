@@ -1,7 +1,6 @@
 import * as model from './model.js';
 import RecipeView from './views/RecipeView.js';
-
-// const recipeContainer = document.querySelector('.recipe');
+import SearchView from './views/SearchView.js';
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -23,7 +22,6 @@ const showRecipes = async function (newURL) {
 
     // Load recipes
     await model.loadRecipe(newURL);
-    // const { recipe } = model.state;
 
     // Render recipes
     // const recipeView = new RecipeView(model.state.recipe) Same as below
@@ -38,9 +36,21 @@ const showRecipes = async function (newURL) {
   }
 };
 
+const showResults = async function () {
+  try {
+    let query = SearchView.getQuery();
+    if (!query) return;
+    await model.loadSearchResults(query);
+    console.log('query', query);
+  } catch (err) {
+    alert(err);
+  }
+};
+
 // window.addEventListener('hashchange', showRecipes);
 const init = () => {
   RecipeView.addHandlerRender(showRecipes);
+  SearchView.addHandlerSearch(showResults);
 };
 //API by Jonas https://forkify-api.herokuapp.com/v2
 init();
