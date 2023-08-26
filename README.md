@@ -5,7 +5,7 @@ I've always been passionate about foods. I love cooking, too. Like a bee collect
 ### 🍔 Stack: HTML5/CSS3, SASS, JS.
 
 ### Desired functions:
-- [ ] Search for recipes by keyword
+- [x] Search for recipes by keyword
 - [ ] Bookmark recipes
 - [ ] Add personal recipes
 - [ ] Calculate servings
