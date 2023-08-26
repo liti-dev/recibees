@@ -486,6 +486,7 @@ body {
 }
 
 .search-results {
+  background-color: #f9f5f3;
   flex-direction: column;
   padding: 3rem 0;
   display: flex;

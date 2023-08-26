@@ -1,6 +1,8 @@
 import * as model from './model.js';
 import RecipeView from './views/RecipeView.js';
 import SearchView from './views/SearchView.js';
+import RecipeView from './views/RecipeView.js';
+import ResultsView from './views/ResultsView.js';
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -38,10 +40,12 @@ const showRecipes = async function (newURL) {
 
 const showResults = async function () {
   try {
+    ResultsView.renderSpinner();
     let query = SearchView.getQuery();
     if (!query) return;
     await model.loadSearchResults(query);
     console.log('query', query);
+    ResultsView.render(model.state.search.results);
   } catch (err) {
     alert(err);
   }
