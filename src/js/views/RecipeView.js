@@ -4,7 +4,7 @@ import icons from '../../img/icons.svg';
 class RecipeView extends View {
   // private properties
   _parentElement = document.querySelector('.recipe');
-  _defaultErrorMessage = `Sorry we couldn't find the recipe. Please try another one!`;
+  _errorMessage = `Sorry we couldn't find the recipe. Please try another one!`;
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(event =>

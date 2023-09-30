@@ -618,7 +618,7 @@ const showResults = async function() {
         console.log("query", query);
         (0, _resultsViewJsDefault.default).render(_modelJs.state.search.results);
     } catch (err) {
-        alert(err);
+        (0, _resultsViewJsDefault.default).renderError();
     }
 };
 // window.addEventListener('hashchange', showRecipes);
@@ -729,7 +729,7 @@ var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class RecipeView extends (0, _viewDefault.default) {
     // private properties
     _parentElement = document.querySelector(".recipe");
-    _defaultErrorMessage = `Sorry we couldn't find the recipe. Please try another one!`;
+    _errorMessage = `Sorry we couldn't find the recipe. Please try another one!`;
     addHandlerRender(handler) {
         [
             "hashchange",
@@ -837,6 +837,7 @@ var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class View {
     _data;
     render(data) {
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
         this._data = data;
         console.log(this._data);
         const markup = this._generateMarkup();
@@ -855,7 +856,8 @@ class View {
         this._clear();
         this._parentElement.insertAdjacentHTML("afterbegin", spinnerMarkup);
     }
-    renderError(message = this._defaultErrorMessage) {
+    renderError(message = this._errorMessage) {
+        console.log("message", message);
         const errorMarkup = `<div class="error">
     <div>
       <svg>
@@ -937,6 +939,7 @@ var _view = require("./View");
 var _viewDefault = parcelHelpers.interopDefault(_view);
 class ResultsView extends (0, _viewDefault.default) {
     _parentElement = document.querySelector(".results");
+    _errorMessage = "No recipes found. Please try another query!";
     _generateMarkup() {
         return this._data.map((r)=>`<li class="preview">
     <a class="preview__link preview__link--active" href="#${r.id}">

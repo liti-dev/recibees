@@ -4,6 +4,9 @@ export default class View {
   _data;
 
   render(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+
     this._data = data;
     console.log(this._data);
     const markup = this._generateMarkup();
@@ -25,7 +28,8 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', spinnerMarkup);
   }
 
-  renderError(message = this._defaultErrorMessage) {
+  renderError(message = this._errorMessage) {
+    console.log('message', message);
     const errorMarkup = `<div class="error">
     <div>
       <svg>
