@@ -1,11 +1,13 @@
 //business logic + state + http lib
-import { API_URL } from './config';
+import { API_URL, RES_PER_PAGE } from './config';
 
 export const state = {
   recipe: {},
   search: {
     query: '',
     results: [],
+    resulsPerPage: RES_PER_PAGE,
+    page: 1,
   },
 };
 export const loadRecipe = async function (newURL) {
@@ -47,4 +49,11 @@ export const loadSearchResults = async function (query) {
   } catch (err) {
     throw err;
   }
+};
+
+export const getResultsPage = (page = state.search.page) => {
+  state.search.page = page;
+  const start = (page - 1) * state.search.resulsPerPage;
+  const end = page * state.search.resulsPerPage;
+  return state.search.results.slice(start, end);
 };

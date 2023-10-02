@@ -44,8 +44,9 @@ const showResults = async function () {
     let query = SearchView.getQuery();
     if (!query) return;
     await model.loadSearchResults(query);
-    console.log('query', query);
-    ResultsView.render(model.state.search.results);
+    // console.log('query', query);
+    // ResultsView.render(model.state.search.results);
+    ResultsView.render(model.getResultsPage());
   } catch (err) {
     ResultsView.renderError();
   }
